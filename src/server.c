@@ -10,6 +10,7 @@
 int server_start(int *server_fd, int port) {
     *server_fd = socket(AF_INET, SOCK_STREAM, 0);
     if (*server_fd < 0) {
+        perror("socket");
         return -1;
     }
 
@@ -23,12 +24,14 @@ int server_start(int *server_fd, int port) {
     sockaddr.sin_port = htons(port);
 
     socklen_t socket_len = sizeof(sockaddr);
-    if (bind(*server_fd, (struct sockaddr *)&sockaddr, socket_len)) {
+    if (bind(*server_fd, (struct sockaddr *)&sockaddr, socket_len) < 0) {
+        perror("bind");
         close(*server_fd);
         return -1;
     }
 
-    if (listen(*server_fd, 10)) {
+    if (listen(*server_fd, 10) < 0) {
+        perror("listen");
         close(*server_fd);
         return -1;
     }
@@ -36,4 +39,14 @@ int server_start(int *server_fd, int port) {
     return 0;
 }
 
+int server_accept(int server_fd) {
+    struct sockaddr_in client;
+    socklen_t client_t = sizeof(client);
+    int client_fd = accept(server_fd, (struct sockaddr *)&client, &client_t);
+    if (client_fd < 0) {
+        perror("accept");
+        return -1;
+    }
 
+    return client_fd;
+}
