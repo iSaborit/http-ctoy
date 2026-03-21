@@ -1,0 +1,115 @@
+# =========================
+
+# Build / Output
+
+# =========================
+
+build/
+bin/
+out/
+dist/
+
+# =========================
+
+# Compiled objects / binaries
+
+# =========================
+
+*.o
+*.out
+*.a
+*.so
+*.dylib
+*.exe
+
+# =========================
+
+# Debug / profiling
+
+# =========================
+
+*.dSYM/
+*.stackdump
+*.core
+core
+vgcore.*
+
+# =========================
+
+# Dependency files (Make)
+
+# =========================
+
+*.d
+
+# =========================
+
+# Logs
+
+# =========================
+
+*.log
+
+# =========================
+
+# Editor / IDE
+
+# =========================
+
+## Neovim / Vim
+
+*.swp
+*.swo
+*~
+.netrwhist
+
+## VSCode
+
+.vscode/
+
+## CLion / JetBrains
+
+.idea/
+cmake-build-*/
+
+# =========================
+
+# CMake (si lo usas)
+
+# =========================
+
+CMakeFiles/
+CMakeCache.txt
+compile_commands.json
+Makefile
+
+# =========================
+
+# System files
+
+# =========================
+
+.DS_Store
+Thumbs.db
+
+# =========================
+
+# Temporary files
+
+# =========================
+
+tmp/
+temp/
+
+# =========================
+
+# Optional: test artifacts
+
+# =========================
+
+coverage/
+*.gcda
+*.gcno
+
+# +++++ Others
+.cache/
