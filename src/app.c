@@ -13,6 +13,8 @@ int app_run() {
         exit(-1);
     }
 
+    printf("Server listening on http://localhost:4000/home\n");
+
     while (1) {
         int client_fd = server_accept(server_fd);
         if (client_fd < 0)
