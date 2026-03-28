@@ -64,6 +64,26 @@ void get_about(const http_request *request, const int client_fd) {
     file_delete(&file);
 }
 
+void get_contact(const http_request *request, const int client_fd) {
+    UNUSED(request);
+
+    http_response r;
+    file_content file = file_read("static/contact.html");
+    if (file.size == 0) {
+        fputs("Could not send contact.html", stderr);
+
+        http_response r;
+        internal_server_error(&r);
+        send_response(client_fd, &r);
+
+        return;
+    }
+
+    html_response(&r, file.data, file.size);
+    send_response(client_fd, &r);
+    file_delete(&file);
+}
+
 void get_style(const http_request *request, const int client_fd) {
     UNUSED(request);
 
@@ -82,6 +102,22 @@ void get_style(const http_request *request, const int client_fd) {
     css_response(&r, file.data, file.size);
     send_response(client_fd, &r);
     file_delete(&file);
+}
+
+void handler_not_found(const int client_fd) {
+    http_response r;
+    not_found(&r);
+
+    send_response(client_fd, &r);
+}
+
+static void not_found(http_response *r) {
+    r->status_code = 404;
+    r->reason = "Not Found";
+    r->content_type = NULL;
+
+    r->body = NULL;
+    r->body_length = 0;
 }
 
 static void html_response(http_response *r, const char *body,
@@ -107,15 +143,6 @@ static void ok_response(http_response *r, const char *body) {
     r->content_type = "text/plain";
     r->body = body;
     r->body_length = strlen(r->body);
-}
-
-static void not_found(http_response *r) {
-    r->status_code = 404;
-    r->reason = "Not Found";
-    r->content_type = NULL;
-
-    r->body = NULL;
-    r->body_length = 0;
 }
 
 static void method_not_allowed(http_response *r) {

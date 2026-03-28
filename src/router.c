@@ -9,6 +9,7 @@ static const route routes[] = {
     {HTTP_GET, "/home", get_home},
     {HTTP_GET, "/index.html", get_home},
     {HTTP_GET, "/about.html", get_about},
+    {HTTP_GET, "/contact.html", get_contact},
     {HTTP_GET, "/style.css", get_style},
 };
 
@@ -22,5 +23,7 @@ int router_dispatch(const http_request *req, const int client_fd) {
             return 0;
         }
     }
+
+    handler_not_found(client_fd);
     return -1;
 }
